@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="itemDao">
+
+	<select id="selectItem" parameterType="vote" resultType="item">
+        SELECT * FROM tb_item WHERE itemId = #{itemId} AND questionId = #{questionId};
+    </select>
+    
+    <select id="selectItemList" parameterType="int" resultType="item">
+        SELECT * FROM tb_item WHERE questionId = #{no};
+    </select>
+    
+    <select id="selectItemListByUser" parameterType="map" resultType="item">
+        select * from tb_item left join (select itemId, 1 as isVoted from tb_result where userId = #{userId}) as tb_result using(itemId) where questionId = #{questionId};
+    </select>
+    
+    <update id="updateCountUp" parameterType="int">
+        UPDATE tb_item SET resultCount = resultCount+1 WHERE itemId = #{no};
+    </update>
+    
+    <update id="updateCountDown" parameterType="int">
+        UPDATE tb_item SET resultCount = resultCount-1 WHERE itemId = #{no};
+    </update>
+
+    <insert id="insertItem" parameterType="item">
+        INSERT INTO tb_item
+            (questionId, title, mediaTypeCode, mediaPath)
+        VALUES
+            (#{questionId}, #{title}, #{mediaTypeCode}, #{mediaPath})
+            
+        <selectKey resultType="int" keyProperty="itemId" order="AFTER">
+            SELECT LAST_INSERT_ID() 
+        </selectKey>
+    </insert>
+    
+    <insert id="insertItems" parameterType="java.util.HashMap">
+        INSERT INTO tb_item
+            (questionId, title, mediaTypeCode, mediaPath)
+        VALUES
+        <foreach collection="itemList" item="item" separator=" , ">
+            (#{item.questionId}, #{item.title}, #{item.mediaTypeCode}, #{item.mediaPath})
+        </foreach>
+    </insert>
+
+</mapper>

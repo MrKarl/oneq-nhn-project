@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- console로 log 남기기 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                ▶ %-5level %d{HH:mm:ss.SSS} [%thread] %logger[%method:%line] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="consoleForLoginInterceptor" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                ▷ %-5level %d{HH:mm:ss} %logger[%method:%line] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- LogNCrash Logback Appender -->
+    <appender name="logncrash-http" class="com.toast.java.logncrash.logback.LogNCrashHttpAppender">
+		<param name="collectorUrl" value="http://api-logncrash.cloud.toast.com" />
+
+		<param name="appKey" value="VribirFBVNODsltq" />
+		<param name="version" value="1.0.0" />
+		<param name="logSource" value="web" />
+		<param name="logType" value="alpha" />
+		<param name="errorCodeType" value="default" />
+		<param name="enable" value="true" />
+		<param name="debug" value="false" />
+	</appender>
+    
+    <!-- LogNCrash Logback Async Appender -->
+    <appender name="logncrash-async"
+        class="com.toast.java.logncrash.logback.LogNCrashAsyncAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ALL</level>
+        </filter>
+        <param name="BlockWhenFull" value="false" />
+        <param name="IncludeCallerData" value="true" />
+        <param name="QueueCapacity" value="2048" />
+        <appender-ref ref="logncrash-http" />
+    </appender>
+
+    <!-- file로 log 남기기 -->
+    <timestamp key="byDay" datePattern="yyyyMMdd" />
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>${HOME}/logs/logback/oneq-${byDay}.log</file>
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${HOME}/logs/logback/oneq-${byDay}.log.zip
+            </fileNamePattern>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                ▶ %-5level %d{HH:mm:ss.SSS} [%thread] %logger[%method:%line] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger -->
+	<logger name="oneq-logger" additivity="true">
+		<level value="error" />
+		<appender-ref ref="console" />
+        <appender-ref ref="file" />
+		<appender-ref ref="logncrash-http" />
+	</logger>
+    
+    <root level="error">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+        <appender-ref ref="logncrash-http" />
+    </root>
+
+</configuration>

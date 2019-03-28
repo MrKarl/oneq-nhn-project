@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+
+    <bean id="abstractXADataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
+        init-method="init" destroy-method="close" abstract="true">
+        <property name="xaDataSourceClassName"
+            value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" />
+        <property name="poolSize" value="10" />
+        <property name="minPoolSize" value="10" />
+        <property name="maxPoolSize" value="30" />
+        <property name="borrowConnectionTimeout" value="60" />
+        <property name="reapTimeout" value="20" />
+        <property name="maxIdleTime" value="60" />
+        <property name="maintenanceInterval" value="60" />
+        <property name="loginTimeout" value="60" />
+        <property name="testQuery">
+            <value>select 1</value>
+        </property>
+    </bean>
+
+    <bean id="xaDataSource1" class="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"
+        lazy-init="true">
+        <property name="URL" value="${jdbc1.url}" />
+        <property name="user" value="${jdbc1.username}" />
+        <property name="password" value="${jdbc1.password}" />
+        <property name="pinGlobalTxToPhysicalConnection" value="true" />
+    </bean>
+    <bean id="xaDataSource2" class="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"
+        lazy-init="true">
+        <property name="URL" value="${jdbc2.url}" />
+        <property name="user" value="${jdbc2.username}" />
+        <property name="password" value="${jdbc2.password}" />
+        <property name="pinGlobalTxToPhysicalConnection" value="true" />
+    </bean>
+
+    <bean id="dataSource1" parent="abstractXADataSource">
+        <property name="uniqueResourceName" value="${jdbc1.uniqueResourceName}" />
+        <property name="xaDataSource" ref="xaDataSource1" />
+    </bean>
+    <bean id="dataSource2" parent="abstractXADataSource">
+        <property name="uniqueResourceName" value="${jdbc2.uniqueResourceName}" />
+        <property name="xaDataSource" ref="xaDataSource2" />
+    </bean>
+    
+</beans>

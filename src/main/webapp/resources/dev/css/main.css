@@ -1,0 +1,280 @@
+body{
+    background-color:#eee;
+    padding-top: 6em;
+}
+#header{
+    display:block;
+}
+#header.user .create-question,
+#header.user .dropdown,
+#header .login{
+    display:block;
+}
+#header .create-question,
+#header .dropdown,
+#header.user .login{
+    display:none;
+}
+.header{
+    word-break: break-all;
+}
+.videoSection{
+    display:none;
+}
+#overlay{
+    display:none;
+    z-index: 999;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height:100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.hashlist.content a{
+    margin-bottom:5px;
+}
+.hashtagBtn{
+    max-width: 100%;
+    overflow-x: hidden;
+    margin-top:5px !important;
+}
+#itemList{
+    margin-top:20px;
+}
+#mediaPathSection>div{
+    vertical-align:middle;
+}
+
+#question_create_item_add{
+    margin-top: 50px;
+}
+.item_remove{
+    cursor:pointer;
+}
+.fileSection{
+    display:none;
+    margin-left:50px;
+}
+.urlSection{
+    display:inline;
+    min-width: 350px;
+}
+.disable{
+    display:none;
+}
+.preview-modal{
+    height:115px;
+    width:115px;
+}
+.preview-modal img{
+    width: 100%;
+    height: 100%;
+    max-width:100%;
+    max-height:100%;
+}
+.previewImg{
+    display:none;
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+}
+.previewVideo{
+    width: 100%;
+    height: 100%;
+}
+.mediaContent{
+    position: relative;
+}
+.media_info{
+    display:none;
+}
+#content{
+    margin-bottom:20px
+}
+.finished.card{
+    border: #767676 1px solid;
+}
+.card>.finished.label{
+    display:none;
+}
+.finished.card>.finished.label{
+    display:inline-block;
+}
+.finished.card>.finished.label+.content{
+    margin-top:2rem;
+} 
+.card .itemlist .item>.content{
+    position: relative;
+}
+.card .itemlist .item>.content{
+	border:#eee 1px solid;
+	cursor:pointer;
+}
+.card .itemlist .item>.content:hover{
+	border:#b5cc18 1px solid;
+	cursor:pointer;
+}
+.card .itemlist .isVoted.item>.content{
+    background-color:#b5cc18;
+    border:#b5cc18 1px solid;
+}
+.card .itemlist .isVoted.item>.content>.vote{
+    color: #fff;
+}
+.card .itemlist .item>.image{
+    border:#eee solid;
+    border-width: 1px 0px 1px 1px;
+    text-align:center;
+}
+.card .itemlist .item>.content,
+.card .itemlist .item>.image img{
+    height:60px !important;
+    width: 79px !important;
+}
+.card .itemlist .item>.content>.vote,
+.card .itemlist .item>.content>.result{
+    line-height: 60px !important;
+    max-height: 60px;
+    overflow: hidden;
+}
+.card .itemlist .item>.content>.result{
+    position:absolute;
+    top:0px;
+    left:0px;
+    height:100%;
+    width:100%;
+    background-color:#fff;
+    display:none;
+}
+.card .itemlist .item>.content>.result>.title{
+    float:left;
+    margin-left:1.5em;
+}
+.card .itemlist .item>.content>.result>.count{
+    float:right;
+    margin-right:1.5em;
+}
+.card .itemlist .item>.content>.result>.bar{
+    position:absolute;
+    top:0px;
+    left:0px;
+    height:100%;
+    background-color:#29BD94;
+    opacity:0.2;
+    transition: width 1s ease;    
+}
+
+#mypage-button-container {
+    padding: 30px 60px;
+}
+
+/*
+ *
+ * 디머 모양 바꾸기
+ *
+**/
+
+/* 공유 디머 크기 조절 */
+.ui.dimmer>.content>*{
+    display:block;
+    margin: auto 10px;
+}
+
+
+/* tab font color 조절 */
+.ui.dimmer>.content>.center .item {
+    color: #FFFFFF;
+}
+.ui.dimmer>.content>.center .dimmerShare {
+    margin-top: 15px;
+}
+.ui.dimmer>.content>.center .dimmerImage{
+    width:auto;
+    height:auto;
+}
+.ui.dimmer>.content>.center .dimmerYoutube {
+    width:100%;
+    min-height:350px;
+    border: 0;
+}
+.ui.dimmer>.content>.center .active.item {
+    color: #000000;
+}
+/* tab 마우스 모양 추가 */
+.ui.dimmer>.content>.center .item:hover {
+    cursor: pointer;
+}
+.ui.dimmer>.content>.center .active.item:hover {
+    cursor: default;;
+}
+
+.ui.dimmer .tab.segment {
+    text-align: left;
+}
+
+/* 디머 버튼 마우스 모양 추가 */
+.dimmer-show:hover, .dimmer-hide:hover {
+    cursor: pointer;
+}
+
+/* close button 위치 조절 */
+.ui.dimmer>.content>.center>.dimmer-hide {
+    margin-top: 10px;
+    position: absolute;
+    right: 0;
+}
+
+@media only screen and (max-width: 767px){
+    .ui.items>.item{
+        -ms-flex-direction:row !important;
+        flex-direction:row !important;
+        margin : 1em 0;
+    }
+    .ui.items>.item>.content{
+        padding-top:0 !important;
+        padding-left:1em !important;
+    }
+}
+
+.message.toast.alert {
+    position: absolute;
+    width: 400px;
+    height: 50px;
+    border: 1px solid black;
+    left: 50%;
+    margin-left: -200px;
+    z-index: 0;
+    text-align: center;
+    font-weight: 900;
+    display: none;
+}
+
+.itemImage,
+.itemYoutube,
+.item_remove,
+.login,
+.create-question {
+    cursor: pointer;
+}
+
+.menu .myPage,
+.menu .logout {
+    color: #333;
+}
+
+#errorModal{
+    margin-top: -260px !important;
+}
+#errorModal .header, #errorModal i{
+    font-size:35px;
+}
+#errorModal .errorModal{
+    font-size:20px;
+}

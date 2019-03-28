@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hashDao">
+    <select id="selectHashList" parameterType="int" resultType="hash">
+        SELECT h.*
+            FROM tb_question q, tb_hash h, tb_hash_ques hq
+                WHERE q.questionId = #{questionId} AND q.questionId = hq.questionId AND hq.hashId = h.hashId;
+    </select>
+    
+    <select id="selectHashCount" parameterType="hash" resultType="hash">
+        SELECT *
+            FROM tb_hash
+                WHERE hashName = #{hashName}
+    </select>
+    
+    <update id="updateHashCount" parameterType="int">
+        UPDATE tb_hash
+        SET hashCount = hashCount+1
+        WHERE hashId = #{hashId}
+    </update>
+    
+    <insert id="insertHashQuestion" parameterType="hashMap">
+        INSERT INTO tb_hash_ques
+            (questionId, hashId)
+        VALUES
+            (#{questionId}, #{hashId})
+    </insert>
+    
+    <insert id="insertHash" parameterType="hash">
+        INSERT INTO tb_hash
+            (hashName)
+        VALUES
+            (#{hashName})
+        <selectKey resultType="int" keyProperty="hashId" order="AFTER">
+            SELECT LAST_INSERT_ID() 
+        </selectKey>
+    </insert>
+</mapper>

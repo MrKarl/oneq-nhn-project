@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resultDao">
+
+    <select id="getResult" parameterType="int" resultType="item">
+        SELECT * FROM tb_item WHERE questionId = #{questionId}
+    </select>
+
+	<select id="checkUserResult" parameterType="vote" resultType="result">
+        SELECT i.itemId, r.userId FROM tb_result r, tb_item i WHERE r.itemId = i.itemId AND r.userId = #{userId} AND i.questionId = #{questionId};
+    </select>
+    
+    <insert id="insertResult" parameterType="vote">
+        INSERT INTO tb_result
+        (itemId, userId, refererHostUrl)
+        VALUES
+        (#{itemId}, #{userId}, #{refererHostUrl});
+    </insert>
+    
+    <update id="updateResult" parameterType="java.util.HashMap">
+        update tb_result set itemId = #{newItemId} where userId = #{userId} AND itemId = #{oldItemId};
+    </update>
+    
+    <delete id="deleteResult" parameterType="java.util.HashMap">
+        DELETE FROM tb_result where itemId = #{itemId} AND userId = #{userId}; 
+    </delete>
+</mapper>

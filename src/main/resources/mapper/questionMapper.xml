@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="questionDao">
+    <insert id="insertQuestion" parameterType="questionInsert">
+        INSERT INTO tb_question
+            (questionId, userId, title, content, questionTypeCode, hit, mediaTypeCode,
+             mediaPath, startAt, stopAt, voteUserCountMax, voteUserCount)
+        VALUES
+            (#{questionId}, #{userId}, #{title}, #{content}, #{questionTypeCode}, #{hit}, #{mediaTypeCode},
+            #{mediaPath}, IFNULL(#{startAt}, NOW()), #{stopAt}, #{voteUserCountMax}, #{voteUserCount})
+        <selectKey resultType="int" keyProperty="questionId" order="AFTER">
+            SELECT LAST_INSERT_ID() 
+        </selectKey>
+    </insert>
+    <!--  TODO : Fix name ( select -> is ) -->
+    <select id="selectValidQuestion" parameterType="int" resultType="question">
+        SELECT * FROM (SELECT * FROM tb_question WHERE questionId = #{questionId}) question 
+            WHERE (voteUserCountMax > voteUserCount OR voteUserCountMax = 0) 
+            AND ((DATE(NOW()) between DATE(startAt) AND DATE(stopAt))
+             OR (startAt IS NULL AND stopAt IS NULL)
+             OR (startAt IS NULL AND DATE(stopAt) >= DATE(NOW()))
+             OR (DATE(startAt) <![CDATA[ <= ]]> DATE(NOW()) AND stopAt IS NULL));
+    </select>
+     
+    <select id="getQuestionsByHash" parameterType="map" resultType="question">
+        SELECT q.*
+            FROM tb_question q, tb_hash h, tb_hash_ques hq 
+                WHERE h.hashName = #{hashName} AND h.hashId = hq.hashId AND hq.questionId = q.questionId 
+                    ORDER BY q.voteUserCount DESC, q.questionId DESC LIMIT #{startIndex}, #{count};
+    </select>
+    
+    <select id="getQuestionsByUser" parameterType="map" resultType="question">
+        SELECT * 
+            FROM tb_question q 
+                WHERE q.userId = #{userId} 
+                    ORDER BY q.voteUserCount DESC, q.questionId DESC LIMIT #{startIndex}, #{count};
+    </select>
+    
+    <select id="getVoteQuestionsByUser" parameterType="map" resultType="question">
+        SELECT DISTINCT q.*
+            FROM tb_question q, tb_item i, tb_result r
+                WHERE r.userId = #{userId} AND r.itemId = i.itemId AND i.questionId = q.questionId
+                    ORDER BY q.voteUserCount DESC, q.questionId DESC LIMIT #{startIndex}, #{count};
+    </select>
+    
+    <select id="getQuestion" parameterType="int" resultType="question">
+        SELECT * FROM tb_question WHERE questionId = #{questionId}
+    </select>
+    
+    <select id="getQuestionInsert" parameterType="int" resultType="questionInsert">
+        SELECT * FROM tb_question WHERE questionId = #{questionId}
+    </select>
+    
+    <select id="getQuestions" parameterType="map" resultType="question">
+        SELECT * FROM tb_question ORDER BY voteUserCount DESC, questionId DESC LIMIT #{startIndex}, #{count}
+    </select>
+    
+    <update id="updateVoteNumUp" parameterType="int">
+        UPDATE tb_question SET voteUserCount = voteUserCount+1 WHERE questionId = #{no};
+    </update>
+    
+    <update id="updateVoteNumDown" parameterType="int">
+        UPDATE tb_question SET voteUserCount = voteUserCount-1 WHERE questionId = #{no};
+    </update>
+    
+    <select id="getQuestionCount" parameterType="int" resultType="Integer">
+        SELECT COUNT(*) FROM tb_question WHERE userId = #{userId}
+    </select>
+    
+    <select id="getVoteCount" parameterType="int" resultType="Integer">
+        SELECT DISTINCT COUNT(*)
+            FROM tb_question q, tb_item i, tb_result r
+                WHERE r.userId = #{userId} AND r.itemId = i.itemId AND i.questionId = q.questionId;
+    </select>
+    <select id="selectQuestionHit" parameterType="int" resultType="Integer">
+        SELECT hit
+            FROM tb_question
+                WHERE questionId = #{questionId};
+    </select>
+    <update id="updateQuestionHit" parameterType="map">
+        UPDATE tb_question SET hit = #{hit} WHERE questionId = #{questionId};
+    </update> 
+</mapper>

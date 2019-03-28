@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       					   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+    <context:property-placeholder location="classpath:properties/oauth.properties" />
+    
+    <bean id="paycoOuath" class="com.toast.oneq.oauth.PaycoOauth">
+        <constructor-arg index="0" value="${payco.clientId}" />
+        <constructor-arg index="1" value="${payco.responseType}" />
+        <constructor-arg index="2" value="${payco.appSecret}" />
+        <constructor-arg index="3" value="${payco.serviceProvider}" />
+        <constructor-arg index="4" value="${payco.redirectUri}" />
+        <constructor-arg index="5" value="${payco.requestCode}" />
+        <constructor-arg index="6" value="${payco.grantType}" />
+        <constructor-arg index="7" value="${payco.accessToken}" />
+        <constructor-arg index="8" value="${payco.getProfile}" />
+        <constructor-arg index="9" value="${payco.paycoCode}" />
+    </bean>
+    
+    <bean id="twitterOauth" class="com.toast.oneq.oauth.TwitterOauth">
+        <constructor-arg index="0" value="${twitter.consumerKey}" />
+        <constructor-arg index="1" value="${twitter.consumerSecret}" />
+        <constructor-arg index="2" value="${twitter.twitterCode}" />
+        <constructor-arg index="3" value="${twitter.redirectUri}" />
+    </bean>
+    
+    <bean id="facebookOauth" class="com.toast.oneq.oauth.FacebookOauth">
+        <constructor-arg index="0" value="${facebook.scope}" />
+        <constructor-arg index="1" value="${facebook.redirectUri}" />
+        <constructor-arg index="2" value="${facebook.clientId}" />
+        <constructor-arg index="3" value="${facebook.appSecret}" />
+        <constructor-arg index="4" value="${facebook.dialogOauth}" />
+        <constructor-arg index="5" value="${facebook.accessToken}" />
+        <constructor-arg index="6" value="${facebook.me}" />
+        <constructor-arg index="7" value="${facebook.fields}" />
+    </bean>
+</beans>

@@ -1,0 +1,141 @@
+body {
+    background-color: #eee;
+}
+
+header {
+    margin: -8px 0 40px -8px;
+    height: 250px;
+}
+
+#mainLogo {
+    background-image: url(/img/oneq.png);
+    background-size: cover;
+    text-align: center;
+    width: 300px;
+    height: 148px;
+    margin: auto;
+    position: relative;
+    top: 65px;
+}
+
+.logoTitle {
+    position: relative;
+    display: block;
+    margin: auto;
+    font-size: 1.5rem;
+    font-weight: normal;
+    line-height: 18px;
+    text-align: center;
+    color: #666;
+    top: 70px;
+}
+
+section {
+    margin-left: -8px;
+}
+
+.logo {
+    display: block;
+    width: 500px;
+    text-align: center;
+    margin: 15px auto;
+    height: 70px;
+    color: white;
+    font-weight: bolder;
+    font-size: 40px;
+    border-radius: 5px;
+    padding-top: 10px;
+}
+
+.logo:hover ,.close:hover {
+    cursor: pointer;
+    opacity:0.4;
+}
+
+#payco {
+    background-color: #FA2828;
+}
+
+#facebook {
+    background-color: #45619D;
+}
+
+#twitter {
+    background-color: #1DA1F2;
+}
+
+.close {
+    width: 130px;
+    background-color: grey;
+}
+
+footer {
+    width: calc(100% - 10px);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 25px;
+    background-color: #fff;
+    text-align: right;
+    color: grey;
+    padding: 5px 10px 0 0;
+}
+
+a {
+   text-decoration: none;
+}
+
+@media screen and (min-width: 345px) and (max-width: 600px) {
+    header, footer {
+        display: none;
+    }
+    
+    html, body{
+        height: calc(100% - 8px);
+    }
+    
+    section {
+        height: 100%;
+    }
+    
+    .logo {
+        width: calc(100% + 8px);
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        height: calc(100% / 4);
+        line-height: 10rem;
+    }
+    
+    .logo:FIRST-CHILD {
+        margin-top: -8px;
+    }
+}
+
+@media screen and (max-width: 344px) {
+    header, footer {
+        display: none;
+    }
+    
+    html, body{
+        height: calc(100% - 8px);
+    }
+    
+    section {
+        height: 100%;
+    }
+    
+    .logo {
+        width: calc(100% + 8px);
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        height: calc(100% / 4);
+        font-size: 20px;
+        line-height: 7rem;
+    }
+    
+    .logo:FIRST-CHILD {
+        margin-top: -8px;
+    }
+}
